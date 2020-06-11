@@ -2,7 +2,7 @@
 ## Nutrition Analysis Using Image Classification
 1. Classify the images of food for further diet monitoring applications using convolution neural networks (CNNs).
 2. Then converting this model into a web API which will accept a fruit image as input and returns the name of fruit and using this name to make request using another API (Nutrition API by Nutritionix) to get the nutrition content of that fruit.
-3. Creating an interactive web application that will make requests to this API and show the results to the user in a user-friendly environment.
+3. Creating an interactive web application that will make requests to this API and show the results in a user-friendly environment.
 
 ## Dataset 
 The dataset is downloaded from the Kaggle's "Fruits 360" dataset. https://www.kaggle.com/moltean/fruits
