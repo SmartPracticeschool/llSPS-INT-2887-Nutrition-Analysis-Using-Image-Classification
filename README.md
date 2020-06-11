@@ -1,8 +1,8 @@
 # llSPS-INT-2887-Nutrition-Analysis-Using-Image-Classification
 ## Nutrition Analysis Using Image Classification
 1. Classify the images of food for further diet monitoring applications using convolution neural networks (CNNs).
-2. Then converting this model into a web API (Nutrition API )which will accept a fruit image as input and returns the name of fruit along with its nutritional components.
-3. Creating an interactive web application that will make requests to this "Nutrition API" and show the results to the user in a user-friendly environment.
+2. Then converting this model into a web API which will accept a fruit image as input and returns the name of fruit and using this name to make request using another API (Nutrition API by Nutritionix) to get the nutrition content of that fruit.
+3. Creating an interactive web application that will make requests to this API and show the results to the user in a user-friendly environment.
 
 ## Dataset 
 The dataset is downloaded from the Kaggle's "Fruits 360" dataset. https://www.kaggle.com/moltean/fruits
@@ -16,7 +16,7 @@ The dataset is downloaded from the Kaggle's "Fruits 360" dataset. https://www.ka
  > Apples,Bananas,Blueberry,Cherry,Dates,Grapes,Guava,Lemon,Mango,Onion,Orange,Papaya,Pineapple,Pomegranate,Potato,Strawberry,Tomato,Watermelon
 
 ##### Subset of the "Fruit 360" dataset used in this project:
->1. Total number of images: 90483.
+>1. Total number of images: 15584.
 >2. Training set size: 10597 images (one fruit or vegetable per image).
 >3. Test set size: 4987 images (one fruit or vegetable per image).
 >4. Number of classes: 18
