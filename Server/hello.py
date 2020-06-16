@@ -1,151 +1,19 @@
-from __future__ import division, print_function
-from flask import Flask, redirect, url_for, request, render_template, jsonify,make_response
-import json
-from PIL import Image 
+from flask import Flask, request, jsonify,make_response
+
 from werkzeug.utils import secure_filename
-import numpy as np
 from gevent.pywsgi import WSGIServer
+
 import sys
 import os
+from PIL import Image 
 from binascii import a2b_base64
-import glob
-global model,graph
+
 import tensorflow as tf
-from base64 import decodestring
 
 app = Flask(__name__)
 
-classes = ['Apple Braebun',
-'Apple Crimson Snow',
-'Apple Golden 1',
-'Apple Golden 2',
-'Apple Golden 3',
-'Apple Granny Smith',
-'Apple Pink Lady',
-'Apple Red 1',
-'Apple Red 2',
-'Apple Red 3',
-'Apple Red Delicious',
-'Apple Red Yellow 1',
-'Apple Red Yellow 2',
-'Apricot',
-'Avocado',
-'Avocado ripe',
-'Banana',
-'Banana Lady Finger',
-'Banana Red',
-'Beetroot',
-'Blueberry',
-'Cactus fruit',
-'Cantaloupe 1',
-'Cantaloupe 2',
-'Carambula',
-'Cauliflower',
-'Cherry 1',
-'Cherry 2',
-'Cherry Rainier',
-'Cherry Wax Black',
-'Cherry Wax Red',
-'Cherry Wax Yellow',
-'Chestnut',
-'Clementine',
-'Cocos',
-'Corn',
-'Corn Husk',
-'Cucumber Ripe',
-'Cucumber Ripe 2',
-'Dates',
-'Eggplant',
-'Fig',
-'Ginger Root',
-'Granadilla',
-'Grape Blue',
-'Grape Pink',
-'Grape White',
-'Grape White 2',
-'Grape White 3',
-'Grape White 4',
-'Grapefruit Pink',
-'Grapefruit White',
-'Guava',
-'Hazelnut',
-'Huckleberry',
-'Kaki',
-'Kiwi',
-'Kohlrabi',
-'Kumquats',
-'Lemon',
-'Lemon Meyer',
-'Limes',
-'Lychee',
-'Mandarine',
-'Mango',
-'Mango Red',
-'Mangostan',
-'Maracuja',
-'Melon Piel de Sapo',
-'Mulberry',
-'Nectarine',
-'Nectarine Flat',
-'Nut Forest',
-'Nut Pecan',
-'Onion Red',
-'Onion Red Peeled',
-'Onion White',
-'Orange',
-'Papaya',
-'Passion Fruit',
-'Peach',
-'Peach 2',
-'Peach Flat',
-'Pear',
-'Pear 2',
-'Pear Abate',
-'Pear Forelle',
-'Pear Kaiser',
-'Pear Monster',
-'Pear Red',
-'Pear Stone',
-'Pear Williams',
-'Pepino',
-'Pepper Green',
-'Pepper Orange',
-'Pepper Red',
-'Pepper Yellow',
-'Physalis',
-'Physalis with Husk',
-'Pineapple',
-'Pineapple Mini',
-'Pitahaya Red',
-'Plum',
-'Plum 2',
-'Plum 3',
-'Pomegranate',
-'Pomelo Sweetie',
-'Potato Red',
-'Potato Red Washed',
-'Potato Sweet',
-'Potato White',
-'Quince',
-'Rambutan',
-'Raspberry',
-'Redcurrant',
-'Salak',
-'Strawberry',
-'Strawberry Wedge',
-'Tamarillo',
-'Tangelo',
-'Tomato 1',
-'Tomato 2',
-'Tomato 3',
-'Tomato 4',
-'Tomato Cherry Red',
-'Tomato Heart',
-'Tomato Maroon',
-'Tomato Yellow',
-'Tomato not Ripened',
-'Walnut',
-'Watermelon']
+# all 131 classes of fruits/vegetables
+classes = ['Apple Braebun', 'Apple Crimson Snow', 'Apple', 'Apple', 'Apple', 'Apple Granny Smith', 'Apple Pink Lady', 'Apple', 'Apple', 'Apple', 'Apple', 'Apple', 'Apple', 'Apricot', 'Avocado', 'Avocado ripe', 'Banana', 'Banana Lady Finger', 'Banana Red', 'Beetroot', 'Blueberry', 'Cactus fruit', 'Cantaloupe', 'Cantaloupe', 'Carambula', 'Cauliflower', 'Cherry', 'Cherry', 'Cherry Rainier', 'Cherry Wax Black', 'Cherry Wax Red', 'Cherry Wax Yellow', 'Chestnut', 'Clementine', 'Cocos', 'Corn', 'Corn Husk', 'Cucumber Ripe', 'Cucumber Ripe', 'Dates', 'Eggplant', 'Fig', 'Ginger Root', 'Granadilla', 'Grape Blue', 'Grape Pink', 'Grape White', 'Grape White', 'Grape White', 'Grape White', 'Grapefruit Pink', 'Grapefruit White', 'Guava', 'Hazelnut', 'Huckleberry', 'Kaki', 'Kiwi', 'Kohlrabi', 'Kumquats', 'Lemon', 'Lemon Meyer', 'Limes', 'Lychee', 'Mandarine', 'Mango', 'Mango', 'Mangostan', 'Maracuja', 'Melon Piel de Sapo', 'Mulberry', 'Nectarine', 'Nectarine', 'Nut', 'Nut', 'Onion', 'Onion', 'Onion', 'Orange', 'Papaya', 'Passion Fruit', 'Peach', 'Peach', 'Peach', 'Pear', 'Pear', 'Pear Abate', 'Pear Forelle', 'Pear Kaiser', 'Pear Monster', 'Pear Red', 'Pear Stone', 'Pear Williams', 'Pepino', 'Pepper Green', 'Pepper Orange', 'Pepper Red', 'Pepper Yellow', 'Physalis', 'Physalis with Husk', 'Pineapple', 'Pineapple Mini', 'Pitahaya Red', 'Plum', 'Plum', 'Plum', 'Pomegranate', 'Pomelo Sweetie', 'Potato', 'Potato', 'Potato', 'Potato', 'Quince', 'Rambutan', 'Raspberry', 'Redcurrant', 'Salak', 'Strawberry', 'Strawberry Wedge', 'Tamarillo', 'Tangelo', 'Tomato', 'Tomato', 'Tomato', 'Tomato', 'Tomato','Cherry Red', 'Tomato', 'Tomato', 'Tomato', 'Tomato', 'Walnut', 'Watermelon']
 
 IMG_SIZE=100
 def process_image(image_path):
@@ -159,48 +27,61 @@ def process_image(image_path):
     image = tf.image.resize(image,size=[IMG_SIZE,IMG_SIZE])
     return(image)
 
-def generate_data(img_path):
+def generate_dataset(img_path):
+    # create tensorflow dataset i.e [(X,y),(X,y)......]
     data = tf.data.Dataset.from_tensors(tf.constant(img_path))
+    # create batch because our accepts data in form of batches
     data_batch = data.map(lambda i : process_image(i)).batch(32)
     return data_batch
 
 def make_predictions(image_path,model):
-    image = generate_data(image_path)
+    # create tf.dataset from image path
+    image = generate_dataset(image_path)
+    # predicting the probabilites of fruits/vegetables using our saved model
     predictions = model.predict(image)
+    # returning the fruit/vegetable name having maximum probability
     return(classes[predictions.argmax()])
 
 @app.route('/', methods=['OPTIONS','POST'])
 def greeting():
 
+    # handling the preflight request that the browser sends to check CORS
     def build_preflight_response():
-        response = make_response("yoyoyoyoyoyoyoyoyoy")
+        response = make_response("Preflight-Request-Response")
         response.headers.add("Access-Control-Allow-Origin", "*")
         response.headers.add('Access-Control-Allow-Headers', "*")
         response.headers.add('Access-Control-Allow-Methods', "*")
         return response
+    # handling the actual request 
     def build_actual_response(response):
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
 
+    # preflight request if of OPTIONS method
     if request.method == 'OPTIONS': 
         return build_preflight_response()
 
+    # actual request is of POST method
     elif request.method == 'POST': 
         req = request
+        # image recieved is a data URI , so splitting the base64 string from it
         url = req.get_json( )['image'].split(",")[1]
+        # decoding the string to get the image
         binary_data = a2b_base64(url)
+        # writing image binary data to a file in jpg format
         fd = open('uploads/temp.jpg', 'wb')
         fd.write(binary_data)
         fd.close()
 
+        # loading the saved model
         model = tf.keras.models.load_model('20200613-121953_131-cat-totaldata-adam-0.978.h5')
 
+        # predicting fruit using image
         predicted_fruit_name = make_predictions("uploads/temp.jpg", model)
 
+        # returning response in JSON format
         return build_actual_response(jsonify({ 'prediction': predicted_fruit_name })),200
     
-    
-
 # @app.after_request
 # def after_request(response):
 #     print("log: setting cors" , file = sys.stderr)
