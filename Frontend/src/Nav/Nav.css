@@ -1,0 +1,15 @@
+#nav{
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+    flex: none;
+
+    box-sizing: border-box;
+    padding: 20px 10px; 
+
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    font-weight:bolder;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
