@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  background-image: url('./Asset/1920x1080-medium-sky-blue-solid-color-background.jpg');
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  box-sizing: border-box;
+  border-left: 20px solid white;
+}
+#root{
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+

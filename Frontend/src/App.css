@@ -1,0 +1,35 @@
+#app {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-family: monospace;
+
+  display: flex;
+  flex-direction: column;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+#container{
+  box-sizing: border-box;
+  flex: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.267);
+  width: 95%;
+}
+#logo{
+  width: 110px;
+  height: 110px;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  background-image: url('./Asset/kisspng-computer-icons-iphone-fruit-strawberry-cartoon-5ad8293acb52c0.5001597815241157708328.png');
+  background-size: cover;
+}
+
+#prediction{
+  font-size: 20px;
+  color: white;
+  font-weight: 800;
+}
