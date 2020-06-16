@@ -1,35 +1,57 @@
 #app {
   text-align: center;
   width: 100%;
-  height: 100%;
+  height: 180vh;
   font-family: monospace;
-
   display: flex;
   flex-direction: column;
-  flex-flow: column nowrap;
   align-items: center;
 }
 
-#container{
-  box-sizing: border-box;
-  flex: auto;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.267);
-  width: 95%;
-}
-#logo{
-  width: 110px;
-  height: 110px;
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-  background-image: url('./Asset/kisspng-computer-icons-iphone-fruit-strawberry-cartoon-5ad8293acb52c0.5001597815241157708328.png');
+#cover{
+  height: 90vh;
+  width: 100%;
+  background-image: url(Asset/fnv.png);
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 900;
   background-size: cover;
+  background-position: top;
+}
+
+#field{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  height: 90vh;
+ 
+  background-color: rgb(255, 255, 255);
+  position: relative;
+}
+
+#quote{
+  position: absolute;
+  top:20px;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 40px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  color: #008080;
 }
 
 #prediction{
-  font-size: 20px;
-  color: white;
-  font-weight: 800;
+  position: absolute;
+  top:130px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 25px;
+  color: rgb(0, 0, 0);
+  height: auto;
+  width: auto;
+  padding: 10px;
+  text-align: left;
+
 }
+

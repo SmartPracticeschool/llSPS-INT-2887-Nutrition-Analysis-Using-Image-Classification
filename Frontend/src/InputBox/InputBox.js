@@ -29,7 +29,9 @@ class InputBox extends Component {
             labelPosition="left"
             icon="file"
             onClick={() => {this.fileInputRef.current.click()}}
-            style={{width:"auto"}}
+            style={{width:"auto",marginRight:"150px"}}
+            color="teal"
+            size='large'
         />
         <input
             name='yoyo'
@@ -47,6 +49,9 @@ class InputBox extends Component {
             disabled={!this.state.file}
             style={{width:"auto"}}
             onClick={ this.handleUpload}
+            color="blue"
+            size="large"
+            loading={this.props.uploading}
         />
     </div>
     );
