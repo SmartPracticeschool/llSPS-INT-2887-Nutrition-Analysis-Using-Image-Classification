@@ -1,0 +1,8 @@
+Flask==1.1.2
+cloudant==2.4.0
+tensorflow-cpu==2.2.0
+Werkzeug==1.0.1
+urllib3==1.25.9
+pip==20.1.1
+pillow
+gevent
