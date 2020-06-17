@@ -3,7 +3,6 @@ import './App.css';
 import Nav from './Nav/Nav'
 import {Image} from 'semantic-ui-react'
 import InputBox from './InputBox/InputBox'
-import FadeIn from 'react-fade-in'
 class App extends Component {
   state = {
       base64:null,
@@ -11,7 +10,6 @@ class App extends Component {
       nutrients: null,
       uploading:false,
       selected:false
-
   }
 
 
@@ -62,7 +60,7 @@ class App extends Component {
     fetch("https://yo-fruits.eu-gb.mybluemix.net/", requestOptions)
       .then(result => result.json())
       .then(re => this.makeNutrientRequest(re.prediction))
-      .catch(error => console.log('error', error));
+      .catch(error => console.log('error', "sdadada"));
   }
   
 
@@ -79,9 +77,6 @@ class App extends Component {
 
             <div id='field'>
               <div id="quote">{"Always try to eat the colours of rainbow"}</div>
-              
-
-        
               <Image 
                 hidden={!selected} 
                 style={{'height':"250px","width":"auto", 'position':"absolute",'top':"120px"}} 

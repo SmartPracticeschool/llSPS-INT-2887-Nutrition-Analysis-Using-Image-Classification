@@ -12,8 +12,25 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
-# all 131 classes of fruits/vegetables
-classes = ['Apple Braebun', 'Apple Crimson Snow', 'Apple', 'Apple', 'Apple', 'Apple Granny Smith', 'Apple Pink Lady', 'Apple', 'Apple', 'Apple', 'Apple', 'Apple', 'Apple', 'Apricot', 'Avocado', 'Avocado ripe', 'Banana', 'Banana Lady Finger', 'Banana Red', 'Beetroot', 'Blueberry', 'Cactus fruit', 'Cantaloupe', 'Cantaloupe', 'Carambula', 'Cauliflower', 'Cherry', 'Cherry', 'Cherry Rainier', 'Cherry Wax Black', 'Cherry Wax Red', 'Cherry Wax Yellow', 'Chestnut', 'Clementine', 'Cocos', 'Corn', 'Corn Husk', 'Cucumber Ripe', 'Cucumber Ripe', 'Dates', 'Eggplant', 'Fig', 'Ginger Root', 'Granadilla', 'Grape Blue', 'Grape Pink', 'Grape White', 'Grape White', 'Grape White', 'Grape White', 'Grapefruit Pink', 'Grapefruit White', 'Guava', 'Hazelnut', 'Huckleberry', 'Kaki', 'Kiwi', 'Kohlrabi', 'Kumquats', 'Lemon', 'Lemon Meyer', 'Limes', 'Lychee', 'Mandarine', 'Mango', 'Mango', 'Mangostan', 'Maracuja', 'Melon Piel de Sapo', 'Mulberry', 'Nectarine', 'Nectarine', 'Nut', 'Nut', 'Onion', 'Onion', 'Onion', 'Orange', 'Papaya', 'Passion Fruit', 'Peach', 'Peach', 'Peach', 'Pear', 'Pear', 'Pear Abate', 'Pear Forelle', 'Pear Kaiser', 'Pear Monster', 'Pear Red', 'Pear Stone', 'Pear Williams', 'Pepino', 'Pepper Green', 'Pepper Orange', 'Pepper Red', 'Pepper Yellow', 'Physalis', 'Physalis with Husk', 'Pineapple', 'Pineapple Mini', 'Pitahaya Red', 'Plum', 'Plum', 'Plum', 'Pomegranate', 'Pomelo Sweetie', 'Potato', 'Potato', 'Potato', 'Potato', 'Quince', 'Rambutan', 'Raspberry', 'Redcurrant', 'Salak', 'Strawberry', 'Strawberry Wedge', 'Tamarillo', 'Tangelo', 'Tomato', 'Tomato', 'Tomato', 'Tomato', 'Tomato','Cherry Red', 'Tomato', 'Tomato', 'Tomato', 'Tomato', 'Walnut', 'Watermelon']
+classes = [
+    "Apple",
+    "Banana",
+    "Blueberry",
+    "Cherry",
+    "Dates",
+    "Grapes",
+    "Guava",
+    'Lemon',
+    "Mango",
+    "Onion",
+    "Orange",
+    "Papaya",
+    "Pineapple",
+    "Pomegranate",
+    "Potato",
+    "Strawberry",
+    "Tomato",
+    "Watermelon"]
 
 IMG_SIZE=100
 def process_image(image_path):
@@ -23,6 +40,7 @@ def process_image(image_path):
     image = tf.image.decode_jpeg(image,channels=3)
     # change the image dtype to float so as to scale it between (0,1)
     image = tf.image.convert_image_dtype(image,tf.float32)
+
     # resize tha image
     image = tf.image.resize(image,size=[IMG_SIZE,IMG_SIZE])
     return(image)
@@ -74,7 +92,7 @@ def greeting():
         fd.close()
 
         # loading the saved model
-        model = tf.keras.models.load_model('20200613-121953_131-cat-totaldata-adam-0.978.h5')
+        model = tf.keras.models.load_model('20200613-080411_18-cat-totaldata-adam-0.965.h5')
 
         # predicting fruit using image
         predicted_fruit_name = make_predictions("uploads/temp.jpg", model)
