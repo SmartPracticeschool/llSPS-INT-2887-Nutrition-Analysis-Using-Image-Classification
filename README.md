@@ -1,4 +1,5 @@
 # llSPS-INT-2887-Nutrition-Analysis-Using-Image-Classification
+## DEPLOYED AT https://fruitscal.herokuapp.com
 ## Nutrition Analysis Using Image Classification
 1. Classify the images of food for further diet monitoring applications using convolution neural networks (CNNs).
 2. Then converting this model into a web API which will accept a fruit image as input and returns the name of fruit and using this name to make request using another API (Nutrition API by Nutritionix) to get the nutrition content of that fruit.
